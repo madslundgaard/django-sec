@@ -349,6 +349,8 @@ class Index(models.Model):
         db_index=True,
         help_text=_('The name of the associated financial filing.'))
     
+    xbrlzip_file = models.FileField()
+    
     year = models.IntegerField(
         blank=False,
         null=False,
