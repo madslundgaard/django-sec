@@ -229,6 +229,7 @@ class Command(BaseCommand):
                 year=year,
                 quarter=quarter,
                 filename=filename,
+                xbrlzip_file='edgar/data/%s/%s/%s-xbrl.zip' % (cik, filename.split('/')[-1][:-4].replace('-', ''), filename.split('/')[-1][:-4])
             ))
             if not len(bulk_indexes) % bulk_commit_freq:
                 if len(bulk_companies):
