@@ -1,4 +1,5 @@
 from django.conf import settings
+import os
 
 DATA_DIR = settings.django_sec_DATA_DIR = getattr(
     settings,
@@ -7,9 +8,8 @@ DATA_DIR = settings.django_sec_DATA_DIR = getattr(
 
 DEFAULT_FILE_STORAGE = 'sec_http_storage.FallbackStorage'
 
-FALLBACK_STORAGE_URL = 'http://www.sec.gov/Archives'
+FALLBACK_STORAGE_URL = 'http://www.sec.gov/Archives/'
 
-MEDIA_ROOT = settings.django_sec_MEDIA_ROOT = getattr(
-    settings,
-    'django_sec_MEDIA_ROOT',
-    '/tmp/sec_files')
+MEDIA_ROOT = os.path.normpath(os.path.join(DATA_DIR, 'media/'))
+
+MEDIA_URL = '/media/'
