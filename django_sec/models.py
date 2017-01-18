@@ -5,7 +5,7 @@ import re
 import zipfile
 
 # from six.moves.urllib.request import urlopen
-import wget
+#import wget
 
 from django.db import models
 from django.db.models import Min, Max
@@ -457,7 +457,7 @@ class Index(models.Model):
         if xbrl_link:
             if not os.path.exists(xbrl_link.split('/')[-1]):
                 #urlopen(xbrl_link)
-                wget.download(xbrl_link)
+                #wget.download(xbrl_link)
 
 #                 if verbose:
                     #os.system('wget %s' % xbrl_link)
@@ -466,7 +466,7 @@ class Index(models.Model):
                 # Don't to this. It wastes disk space. Just read the ZIP directly.
                 #os.system('unzip *.zip')
 
-    def xbrl_localpath(self):
+    def xbrl_localpath_old(self):
         try:
             os.chdir(self.localpath())
         except OSError:
@@ -486,6 +486,20 @@ class Index(models.Model):
         #return self.localpath() + xml[0], zf.open
         return xml[0], zf.open
 
+    def xbrl_localpath(self):
+        if not self.xbrlzip_file.name
+            return None, None
+        zf = zipfile.ZipFile(self.xbrlzip_file)
+        #xml = sorted([elem for elem in files if elem.endswith('.xml')],key=len)
+        xml = sorted([elem for elem in zf.namelist() if elem.endswith('.xml')], key=len)
+#        print('xml:',xml
+#        sys.exit()
+        if not len(xml):
+            return None, None
+        #return self.localpath() + xml[0], zf.open
+        return xml[0], zf.open
+
+    
     def xbrl(self):
         filepath, open_method = self.xbrl_localpath()
 #        print('filepath:',filepath
