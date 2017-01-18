@@ -22,6 +22,10 @@ from django_sec.models import Company, Index, IndexFile, DATA_DIR
 def removeNonAscii(s):
     return "".join(i for i in s if ord(i) < 128)
 
+def xbrlzip_path(cik, s):
+    _id = s.split('/')[-1][:-4]
+    return 'edgar/data/%s/%s/%s-xbrl.zip' % (cik, _id.replace('-', ''), _id)
+
 def get_options(parser=None):
     make_opt = make_option
     if parser:
@@ -229,7 +233,7 @@ class Command(BaseCommand):
                 year=year,
                 quarter=quarter,
                 filename=filename,
-                xbrlzip_file='edgar/data/%s/%s/%s-xbrl.zip' % (cik, filename.split('/')[-1][:-4].replace('-', ''), filename.split('/')[-1][:-4])
+                xbrlzip_file=xbrlzip_path(cik,filename),
             ))
             if not len(bulk_indexes) % bulk_commit_freq:
                 if len(bulk_companies):
