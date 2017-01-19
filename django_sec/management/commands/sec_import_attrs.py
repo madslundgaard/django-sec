@@ -338,7 +338,7 @@ class Command(BaseCommand):
                 if not i % commit_freq:
                     sys.stdout.flush()
                 
-                ifile.download(verbose=self.verbose)
+                #ifile.download(verbose=self.verbose)
                 
                 # Initialize XBRL parser and populate an attribute called fields with
                 # a dict of 50 common terms.
